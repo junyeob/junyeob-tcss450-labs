@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cfb3/tcss-450-web-service-starter"
+    "url": "https://github.com/junyeob/junyeob-tcss450-labs.git"
   },
   "scripts": {
     "test": "index.js"
