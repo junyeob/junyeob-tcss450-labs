@@ -41,6 +41,7 @@ app.get("/", (request, response) => {
     response.end(); //end the response
 });
 
+app.use('/auth', require('./routes/signin.js'))
 app.use('/auth', require('./routes/register.js'))
 app.use('/hello', require('./routes/hello.js'))
 app.use('/params', require('./routes/params.js'))
