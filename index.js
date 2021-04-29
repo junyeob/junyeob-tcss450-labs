@@ -8,6 +8,9 @@ const pool = require('./utilities').pool
 
 let middleware = require('./middleware')
 
+const validation = require('./utilities').validation
+let isStringProvided = validation.isStringProvided
+
 /*
  * This middleware function parses JASOn in the body of POST requests
  */
@@ -31,8 +34,7 @@ app.post("/hello", (reqeust, response) => {
         message: "Hello, you sent a POST request"
     })
 })
-const validation = require('./utilities').validation
-let isStringProvided = validation.isStringProvided
+
 
 app.get("/params", (request, response) => {
     if (isStringProvided(request.query.name)) {
