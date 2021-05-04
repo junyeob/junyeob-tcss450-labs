@@ -71,7 +71,7 @@ router.get('/', (request, response, next) => {
         })
     }
 }, (request, response) => {
-    const theQuery = "SELECT Password, Salt, MemberId FROM Members WHERE Email=$1"
+    const theQuery = "SELECT Password, Salt, MemberId, Verification FROM Members WHERE Email=$1"
     const values = [request.auth.email]
     pool.query(theQuery, values)
         .then(result => { 
@@ -82,8 +82,18 @@ router.get('/', (request, response, next) => {
                 return
             }
 
+            let verification = result.rows[0].verification
+            if(verification == 0){
+                response.status(404).send({
+                    message: 'Please verify your email before signing in.' 
+                })
+                return
+            }
+            
+
             //Retrieve the salt used to create the salted-hash provided from the DB
             let salt = result.rows[0].salt
+
             
             //Retrieve the salted-hash password provided from the DB
             let storedSaltedHash = result.rows[0].password 
@@ -101,7 +111,7 @@ router.get('/', (request, response, next) => {
                     },
                     config.secret,
                     { 
-                        expiresIn: '14 days' // expires in 14 days
+                        expiresIn: '60 days' // expires in 14 days
                     }
                 )
                 //package and send the results
@@ -124,6 +134,13 @@ router.get('/', (request, response, next) => {
                 message: err.detail
             })
         })
+})
+
+router.get('/logout', (request, response) => {
+
+    console.log(request)
+    response.send("You requested the logout http.")
+
 })
 
 module.exports = router
