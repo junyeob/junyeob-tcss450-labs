@@ -82,13 +82,13 @@ router.get('/', (request, response, next) => {
                 return
             }
 
-            let verification = result.rows[0].verification
-            if(verification == 0){
-                response.status(404).send({
-                    message: 'Please verify your email before signing in.' 
-                })
-                return
-            }
+            // let verification = result.rows[0].verification
+            // if(verification == 0){
+            //     response.status(404).send({
+            //         message: 'Please verify your email before signing in.' 
+            //     })
+            //     return
+            // }
             
 
             //Retrieve the salt used to create the salted-hash provided from the DB
